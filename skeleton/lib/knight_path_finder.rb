@@ -1,7 +1,7 @@
 require_relative '00_tree_node'
 
 class KnightPathFinder
-  attr_reader :starting_position
+  attr_reader :starting_position, :visited_positions
 
   def initialize(starting_position)
     @starting_position = starting_position
@@ -30,6 +30,7 @@ class KnightPathFinder
   end
 
   def build_move_tree
+    @visited_positions = [@starting_position]
     start = PolyTreeNode.new(@starting_position)
     queue = [start]
 
@@ -45,7 +46,12 @@ class KnightPathFinder
     start
   end
 
+  def find_path(end_pos)
+    end_node = build_move_tree.bfs(end_pos)
+    end_node.path_to_root.map(&:value)
+  end
+
   def inspect
-    puts @starting_position
+    p @starting_position
   end
 end

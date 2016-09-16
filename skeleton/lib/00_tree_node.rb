@@ -51,4 +51,22 @@ class PolyTreeNode
     end
     nil
   end
+
+  def sub_tree_size
+    return 1 if @children.empty
+    count = 1
+
+    @children.each do |child|
+      count += child.sub_tree_size
+    end
+    count
+  end
+
+  def path_to_root
+    path = [self]
+    until path[0].parent.nil?
+      path.unshift(path[0].parent)
+    end
+    path
+  end
 end
